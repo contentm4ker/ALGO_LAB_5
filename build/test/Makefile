@@ -99,42 +99,42 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-test/CMakeFiles/example.dir/rule:
-	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/example.dir/rule
-.PHONY : test/CMakeFiles/example.dir/rule
+test/CMakeFiles/test.dir/rule:
+	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/test.dir/rule
+.PHONY : test/CMakeFiles/test.dir/rule
 
 # Convenience name for target.
-example: test/CMakeFiles/example.dir/rule
-.PHONY : example
+test: test/CMakeFiles/test.dir/rule
+.PHONY : test
 
 # fast build rule for target.
-example/fast:
-	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f test/CMakeFiles/example.dir/build.make test/CMakeFiles/example.dir/build
-.PHONY : example/fast
+test/fast:
+	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/build
+.PHONY : test/fast
 
-example.o: example.cpp.o
-.PHONY : example.o
+test.o: test.cpp.o
+.PHONY : test.o
 
 # target to build an object file
-example.cpp.o:
-	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f test/CMakeFiles/example.dir/build.make test/CMakeFiles/example.dir/example.cpp.o
-.PHONY : example.cpp.o
+test.cpp.o:
+	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test.cpp.o
+.PHONY : test.cpp.o
 
-example.i: example.cpp.i
-.PHONY : example.i
+test.i: test.cpp.i
+.PHONY : test.i
 
 # target to preprocess a source file
-example.cpp.i:
-	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f test/CMakeFiles/example.dir/build.make test/CMakeFiles/example.dir/example.cpp.i
-.PHONY : example.cpp.i
+test.cpp.i:
+	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test.cpp.i
+.PHONY : test.cpp.i
 
-example.s: example.cpp.s
-.PHONY : example.s
+test.s: test.cpp.s
+.PHONY : test.s
 
 # target to generate assembly for a file
-example.cpp.s:
-	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f test/CMakeFiles/example.dir/build.make test/CMakeFiles/example.dir/example.cpp.s
-.PHONY : example.cpp.s
+test.cpp.s:
+	cd /home/ubuntu/workspace/5lab/build && $(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/test.cpp.s
+.PHONY : test.cpp.s
 
 # Help Target
 help:
@@ -143,11 +143,11 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... example"
 	@echo "... rebuild_cache"
-	@echo "... example.o"
-	@echo "... example.i"
-	@echo "... example.s"
+	@echo "... test"
+	@echo "... test.o"
+	@echo "... test.i"
+	@echo "... test.s"
 .PHONY : help
 
 

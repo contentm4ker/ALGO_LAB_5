@@ -1,6 +1,6 @@
 set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
 
-include_directories("../include")
+include_directories("../src")
 include_directories("../googletest/googletest/include")
 
 find_library(GTEST
@@ -9,8 +9,8 @@ find_library(GTEST
     NO_DEFAULT_PATH
 )
 
-add_executable(example
-    example.cpp
+add_executable(test
+    test.cpp
 )
 
-target_link_libraries(example ${GTEST} pthread)
+target_link_libraries(test ${GTEST} pthread)

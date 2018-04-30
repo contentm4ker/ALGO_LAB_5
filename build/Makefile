@@ -99,17 +99,128 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named example
+# Target rules for targets named kmp
 
 # Build rule for target.
-example: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 example
-.PHONY : example
+kmp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 kmp
+.PHONY : kmp
 
 # fast build rule for target.
-example/fast:
-	$(MAKE) -f test/CMakeFiles/example.dir/build.make test/CMakeFiles/example.dir/build
-.PHONY : example/fast
+kmp/fast:
+	$(MAKE) -f CMakeFiles/kmp.dir/build.make CMakeFiles/kmp.dir/build
+.PHONY : kmp/fast
+
+#=============================================================================
+# Target rules for targets named kmp_func
+
+# Build rule for target.
+kmp_func: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 kmp_func
+.PHONY : kmp_func
+
+# fast build rule for target.
+kmp_func/fast:
+	$(MAKE) -f CMakeFiles/kmp_func.dir/build.make CMakeFiles/kmp_func.dir/build
+.PHONY : kmp_func/fast
+
+#=============================================================================
+# Target rules for targets named shift
+
+# Build rule for target.
+shift: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 shift
+.PHONY : shift
+
+# fast build rule for target.
+shift/fast:
+	$(MAKE) -f CMakeFiles/shift.dir/build.make CMakeFiles/shift.dir/build
+.PHONY : shift/fast
+
+#=============================================================================
+# Target rules for targets named test
+
+# Build rule for target.
+test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test
+.PHONY : test
+
+# fast build rule for target.
+test/fast:
+	$(MAKE) -f test/CMakeFiles/test.dir/build.make test/CMakeFiles/test.dir/build
+.PHONY : test/fast
+
+src/kmp.o: src/kmp.cpp.o
+.PHONY : src/kmp.o
+
+# target to build an object file
+src/kmp.cpp.o:
+	$(MAKE) -f CMakeFiles/kmp.dir/build.make CMakeFiles/kmp.dir/src/kmp.cpp.o
+.PHONY : src/kmp.cpp.o
+
+src/kmp.i: src/kmp.cpp.i
+.PHONY : src/kmp.i
+
+# target to preprocess a source file
+src/kmp.cpp.i:
+	$(MAKE) -f CMakeFiles/kmp.dir/build.make CMakeFiles/kmp.dir/src/kmp.cpp.i
+.PHONY : src/kmp.cpp.i
+
+src/kmp.s: src/kmp.cpp.s
+.PHONY : src/kmp.s
+
+# target to generate assembly for a file
+src/kmp.cpp.s:
+	$(MAKE) -f CMakeFiles/kmp.dir/build.make CMakeFiles/kmp.dir/src/kmp.cpp.s
+.PHONY : src/kmp.cpp.s
+
+src/kmp_functions.o: src/kmp_functions.cpp.o
+.PHONY : src/kmp_functions.o
+
+# target to build an object file
+src/kmp_functions.cpp.o:
+	$(MAKE) -f CMakeFiles/kmp_func.dir/build.make CMakeFiles/kmp_func.dir/src/kmp_functions.cpp.o
+.PHONY : src/kmp_functions.cpp.o
+
+src/kmp_functions.i: src/kmp_functions.cpp.i
+.PHONY : src/kmp_functions.i
+
+# target to preprocess a source file
+src/kmp_functions.cpp.i:
+	$(MAKE) -f CMakeFiles/kmp_func.dir/build.make CMakeFiles/kmp_func.dir/src/kmp_functions.cpp.i
+.PHONY : src/kmp_functions.cpp.i
+
+src/kmp_functions.s: src/kmp_functions.cpp.s
+.PHONY : src/kmp_functions.s
+
+# target to generate assembly for a file
+src/kmp_functions.cpp.s:
+	$(MAKE) -f CMakeFiles/kmp_func.dir/build.make CMakeFiles/kmp_func.dir/src/kmp_functions.cpp.s
+.PHONY : src/kmp_functions.cpp.s
+
+src/shift.o: src/shift.cpp.o
+.PHONY : src/shift.o
+
+# target to build an object file
+src/shift.cpp.o:
+	$(MAKE) -f CMakeFiles/shift.dir/build.make CMakeFiles/shift.dir/src/shift.cpp.o
+.PHONY : src/shift.cpp.o
+
+src/shift.i: src/shift.cpp.i
+.PHONY : src/shift.i
+
+# target to preprocess a source file
+src/shift.cpp.i:
+	$(MAKE) -f CMakeFiles/shift.dir/build.make CMakeFiles/shift.dir/src/shift.cpp.i
+.PHONY : src/shift.cpp.i
+
+src/shift.s: src/shift.cpp.s
+.PHONY : src/shift.s
+
+# target to generate assembly for a file
+src/shift.cpp.s:
+	$(MAKE) -f CMakeFiles/shift.dir/build.make CMakeFiles/shift.dir/src/shift.cpp.s
+.PHONY : src/shift.cpp.s
 
 # Help Target
 help:
@@ -118,8 +229,20 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... kmp"
+	@echo "... kmp_func"
 	@echo "... rebuild_cache"
-	@echo "... example"
+	@echo "... shift"
+	@echo "... test"
+	@echo "... src/kmp.o"
+	@echo "... src/kmp.i"
+	@echo "... src/kmp.s"
+	@echo "... src/kmp_functions.o"
+	@echo "... src/kmp_functions.i"
+	@echo "... src/kmp_functions.s"
+	@echo "... src/shift.o"
+	@echo "... src/shift.i"
+	@echo "... src/shift.s"
 .PHONY : help
 
 

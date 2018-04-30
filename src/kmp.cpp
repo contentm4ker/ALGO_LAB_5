@@ -1,12 +1,12 @@
 #include "../include/kmp_functions.hpp"
-#include <iostream>
-using namespace std;
 
 int main() {
     string P, T;
     vector<int> entry_positions;
     getline(cin, P);
     getline(cin, T);
+
+    KMP(T, P, entry_positions);
 
     size_t i = 0;
     for(const auto& pos : entry_positions) {
