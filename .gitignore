@@ -3,6 +3,7 @@ cmake_install.cmake
 CMakeCache.txt
 CMakeFiles
 test
+build
 
 # Ignore objects, archives and bin files.
 build/*.[oa]
