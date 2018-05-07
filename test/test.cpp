@@ -1,96 +1,107 @@
 #include <gtest/gtest.h>
 #include "kmp_functions.cpp"
 
+namespace {
+
+using ::testing::TestWithParam;
+using ::testing::Values;
+
+struct StrSearchTest
+{
+    string text;
+	string pattern;
+	vector<int> expected_kmp;
+	vector<int> expected_prefix;
+};
+
+class StrSearchTestFixture : public TestWithParam<StrSearchTest>
+{
+public:
+	virtual void SetUp() {
+	    string _text = GetParam().text;
+	    string _pattern = GetParam().pattern;
+	    KMP(_text, _pattern, kmp_v);
+	    prefix = Prefix_Function(_pattern);
+	}
+    virtual void TearDown() { }
+
+protected:
+    vector<int> kmp_v;
+	vector<int> prefix;
+};
+
+vector<int> getVecWithNumSeq(size_t size) {
+    vector<int> vec(size);
+    int c = -1;
+    for(auto& item : vec) {
+        item = ++c;
+    }
+    return vec;
+}
+
+INSTANTIATE_TEST_CASE_P(StrSearchTestInstantiate, StrSearchTestFixture,
+Values(
+    StrSearchTest{"xyz", "a", {-1}, {0}},
+	StrSearchTest{"aaaa", "", {-1}, {}},
+	StrSearchTest{"aabaaab", "aabaaab", {0}, {0, 1, 0, 1, 2, 2, 3}},
+    StrSearchTest{string (5000000, 'b'), string (15000, 'a'), {-1}, getVecWithNumSeq(15000)},
+    StrSearchTest{string (5000000, 'a'), string (15000, 'a'),
+    getVecWithNumSeq(4985001), getVecWithNumSeq(15000)}
+));
+
+
 void Vectors_Comparison(vector<int> v1, vector<int> v2) {
     for (size_t i = 0; i < v1.size(); ++i) {
         EXPECT_EQ(v1[i], v2[i]) << "Vectors x and y differ at index " << i;
     }
 }
 
-TEST(KmpTest, Positions) {
-    vector<int> arrange_positions;
-    vector<int> positions;
+TEST_P(StrSearchTestFixture, KmpTest) {
+    ASSERT_EQ(GetParam().expected_kmp.size(), kmp_v.size())
+    << "Vector size returning in KMP must be eq " << GetParam().expected_kmp.size();
+    Vectors_Comparison(GetParam().expected_kmp, kmp_v);
 
-    KMP("xyz", "a", positions);
-    ASSERT_EQ(1, positions.size())
-    << "Vector size returning in Prefix Function must be eq 1";
-    Vectors_Comparison({-1}, positions);
-
-    KMP("aabaabaaaabaabaaab", "aabaa", positions);
-    ASSERT_EQ(4, positions.size())
-    << "Vector size returning in Prefix Function must be eq 1";
-    Vectors_Comparison({0, 3, 8, 11}, positions);
-
-    string p(15000, 'a');
-    string t1(5000000, 'b');
-    arrange_positions.resize(0);
-    arrange_positions.push_back(-1);
-    KMP(t1, p, positions);
-    Vectors_Comparison(arrange_positions, positions);
-
-    string t2(5000000, 'a');
-    arrange_positions.resize(4985001);
-    int c = -1;
-    for(auto& item : arrange_positions) {
-        item = ++c;
-    }
-    KMP(t2, p, positions);
-    Vectors_Comparison(arrange_positions, positions);
+    ASSERT_EQ(GetParam().expected_prefix.size(), prefix.size())
+    << "Vector size returning in Prefix Function must be eq " << GetParam().expected_prefix.size();
+    Vectors_Comparison(GetParam().expected_prefix, prefix);
 }
 
-TEST(KmpTest, PrefixFunction) {
-    ASSERT_EQ(1, Prefix_Function("a").size())
-    << "Vector size returning in Prefix Function must be eq 1";
-    Vectors_Comparison({0}, Prefix_Function("a"));
+struct StrShiftTest
+{
+    string A;
+	string B;
+	int exp_shift_pos;
+};
 
-    ASSERT_EQ(5, Prefix_Function("aabaa").size())
-    << "Vector size returning in Prefix Function must be eq 5";
-    Vectors_Comparison({0, 1, 0, 1, 2}, Prefix_Function("aabaa"));
+class StrShiftTestFixture : public TestWithParam<StrShiftTest>
+{
+public:
+	virtual void SetUp() {
+	    shift_pos = KMP_Returning_First_Pos
+	               (GetParam().A + GetParam().A, GetParam().B);
+	}
+    virtual void TearDown() { }
 
-    ASSERT_EQ(7, Prefix_Function("aabaaab").size())
-    << "Vector size returning in Prefix Function must be eq 7";
-    Vectors_Comparison({0, 1, 0, 1, 2, 2, 3}, Prefix_Function("aabaaab"));
+protected:
+	int shift_pos;
+};
 
-    string p(15000, 'a');
-    vector<int> arrange_pf(15000);
-    int c = -1;
-    for(auto& item : arrange_pf) {
-        item = ++c;
-    }
-    Vectors_Comparison(arrange_pf, Prefix_Function(p));
+INSTANTIATE_TEST_CASE_P(StrShiftInstantiation, StrShiftTestFixture,
+Values(
+	StrShiftTest{"defabc", "abcdef", 3},
+	StrShiftTest{"abcdefghijklmn", "fghijklmnabcde", 5},
+	StrShiftTest{"abababab", "babababa", 1},
+	StrShiftTest{"aa", "a", -1},
+	StrShiftTest{"a", "aa", -1},
+	StrShiftTest{string (5000000, 'a'), string (5000000, 'a'), 0},
+	StrShiftTest{string (5000000, 'a'), string (5000000, 'b'), -1}
+));
+
+TEST_P(StrShiftTestFixture, Shifts) {
+    ASSERT_EQ(GetParam().exp_shift_pos, shift_pos);
 }
 
-TEST(ShiftTest, Shifts) {
-    string A = "defabc";
-    string B = "abcdef";
-    ASSERT_EQ(3, KMP_Returning_First_Pos(A + A, B));
-
-    A = "abcdefghijklmn";
-    B = "fghijklmnabcde";
-    ASSERT_EQ(5, KMP_Returning_First_Pos(A + A, B));
-
-    A = "abababab";
-    B = "babababa";
-    ASSERT_EQ(1, KMP_Returning_First_Pos(A + A, B));
-
-    A = "aa";
-    B = "a";
-    ASSERT_EQ(-1, KMP_Returning_First_Pos(A + A, B));
-
-    A = "a";
-    B = "aa";
-    ASSERT_EQ(-1, KMP_Returning_First_Pos(A + A, B));
-
-    string A1(5000000, 'a');
-    string B1(5000000, 'a');
-    ASSERT_NO_THROW(KMP_Returning_First_Pos(A1 + A1, B1));
-    ASSERT_EQ(0, KMP_Returning_First_Pos(A1 + A1, B1));
-
-    string B2(5000000, 'b');
-    ASSERT_NO_THROW(KMP_Returning_First_Pos(A1 + A1, B2));
-    ASSERT_EQ(-1, KMP_Returning_First_Pos(A1 + A1, B2));
 }
-
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);

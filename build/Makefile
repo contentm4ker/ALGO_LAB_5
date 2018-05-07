@@ -125,6 +125,19 @@ kmp_func/fast:
 .PHONY : kmp_func/fast
 
 #=============================================================================
+# Target rules for targets named res
+
+# Build rule for target.
+res: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 res
+.PHONY : res
+
+# fast build rule for target.
+res/fast:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/build
+.PHONY : res/fast
+
+#=============================================================================
 # Target rules for targets named shift
 
 # Build rule for target.
@@ -198,6 +211,30 @@ src/kmp_functions.cpp.s:
 	$(MAKE) -f CMakeFiles/kmp_func.dir/build.make CMakeFiles/kmp_func.dir/src/kmp_functions.cpp.s
 .PHONY : src/kmp_functions.cpp.s
 
+src/research.o: src/research.cpp.o
+.PHONY : src/research.o
+
+# target to build an object file
+src/research.cpp.o:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/src/research.cpp.o
+.PHONY : src/research.cpp.o
+
+src/research.i: src/research.cpp.i
+.PHONY : src/research.i
+
+# target to preprocess a source file
+src/research.cpp.i:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/src/research.cpp.i
+.PHONY : src/research.cpp.i
+
+src/research.s: src/research.cpp.s
+.PHONY : src/research.s
+
+# target to generate assembly for a file
+src/research.cpp.s:
+	$(MAKE) -f CMakeFiles/res.dir/build.make CMakeFiles/res.dir/src/research.cpp.s
+.PHONY : src/research.cpp.s
+
 src/shift.o: src/shift.cpp.o
 .PHONY : src/shift.o
 
@@ -232,6 +269,7 @@ help:
 	@echo "... kmp"
 	@echo "... kmp_func"
 	@echo "... rebuild_cache"
+	@echo "... res"
 	@echo "... shift"
 	@echo "... test"
 	@echo "... src/kmp.o"
@@ -240,6 +278,9 @@ help:
 	@echo "... src/kmp_functions.o"
 	@echo "... src/kmp_functions.i"
 	@echo "... src/kmp_functions.s"
+	@echo "... src/research.o"
+	@echo "... src/research.i"
+	@echo "... src/research.s"
 	@echo "... src/shift.o"
 	@echo "... src/shift.i"
 	@echo "... src/shift.s"
